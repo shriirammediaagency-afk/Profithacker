@@ -79,6 +79,12 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1823216932188980');
     fbq('track', 'PageView');
+
+    function trackTelegramClick() {
+        if (typeof fbq === 'function') {
+            fbq('track', 'Subscribe');
+        }
+    }
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1823216932188980&ev=PageView&noscript=1"
@@ -237,7 +243,7 @@
                 </div>
             </div>
 
-            <!-- 6. ANIMATED GOLD CTA BUTTON (TRACKING ONLY HERE) -->
+            <!-- 6. ANIMATED GOLD CTA BUTTON WITH UPDATED TELEGRAM LINK -->
             <div class="w-full max-w-[360px] mb-2">
                 <a href="https://t.me/+IwiuY6VsSRpjYjk0" target="_blank" rel="noopener noreferrer" 
                    onclick="trackTelegramClick()"
@@ -271,11 +277,11 @@
             © 2026 Profit Hacker™. All rights reserved.
         </p>
 
-        <!-- Agency Credit (Promotional attribution retained without tracking) -->
+        <!-- Agency Credit -->
         <p class="text-[10px] sm:text-[11px] text-slate-400">
             Powered by 
             <a href="javascript:void(0)" onclick="openModal('agency')" class="text-[#d9a74a] hover:underline font-semibold">
-                Digital Ads Experts
+                ShriRam Media Agency
             </a>
         </p>
     </footer>
@@ -284,4 +290,84 @@
     <div id="modal-overlay" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
         <div id="modal-container" class="bg-[#0b111e] max-w-sm w-full rounded-2xl p-5 relative border border-slate-800 shadow-2xl transform scale-95 transition-transform duration-300 text-left">
             <div class="flex justify-between items-center pb-3 mb-3 border-b border-slate-800">
-                <h3 id="
+                <h3 id="modal-title" class="text-base font-bold text-amber-400">Title</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="modal-content" class="text-xs text-slate-300 space-y-2 max-h-[60vh] overflow-y-auto pr-1 leading-relaxed">
+                <!-- Modal Body Text dynamically loaded via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SCRIPT LOGIC -->
+    <script>
+        const modalData = {
+            privacy: {
+                title: "Privacy Policy",
+                content: `<p>Your privacy is important to us. This channel provides information and community updates. We do not sell or share your personal data with third parties.</p>
+                          <p>We use standard web analytics and tracking pixels (such as Meta Pixel) to improve user experience and measure ad performance.</p>`
+            },
+            terms: {
+                title: "Terms & Conditions",
+                content: `<p>By accessing this site or joining our Telegram channel, you agree to comply with our community standards.</p>
+                          <p>All content provided is for informational and educational purposes only. Unauthorized reproduction or redistribution of our proprietary content without prior written permission is strictly prohibited.</p>`
+            },
+            disclaimer: {
+                title: "Disclaimer",
+                content: `<p><strong>Educational & Informational Disclaimer:</strong> We are not SEBI registered advisors. All market charts, setups, and analysis provided in this channel are purely for educational purposes.</p>
+                          <p>Trading in financial markets involves substantial risk of loss and is not suitable for every investor. Please consult a certified financial advisor before making any investment decisions.</p>`
+            },
+            contact: {
+                title: "Contact Us",
+                content: `<p>For queries, official support, or business partnerships, please reach out via Telegram or email:</p>
+                          <p><strong>Official Support:</strong> Contact our admins inside the Telegram channel.</p>
+                          <p><strong>Email:</strong> support@profithacker.com</p>`
+            },
+            agency: {
+                title: "ShriRam Media Agency",
+                content: `<p><strong>ShriRam Media Agency</strong> specializes in performance marketing, high-converting mobile landing page architecture, and social media media growth.</p>
+                          <p>Need a custom high-converting landing page for your brand or channel? Get in touch with our media agency team today.</p>`
+            }
+        };
+
+        function openModal(type) {
+            const data = modalData[type];
+            if (!data) return;
+
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-content').innerHTML = data.content;
+
+            const overlay = document.getElementById('modal-overlay');
+            const container = document.getElementById('modal-container');
+
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                container.classList.remove('scale-95');
+                container.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            const container = document.getElementById('modal-container');
+
+            overlay.classList.add('opacity-0');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+
+        document.getElementById('modal-overlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
